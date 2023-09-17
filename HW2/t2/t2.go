@@ -2,38 +2,35 @@ package t2
 
 import (
 	"fmt"
-	types "hw/shared"
 )
 
 func Run(input string) {
-	var stack []rune // Стек символов (скобок)
-	var x rune
 	count := 0
+	length := 0
 	max := 0
 
-	for _, r := range input {
-		if len(stack) > 0 {
-			stack, x = types.Pop(stack)
-			if x == '(' && r == ')' {
-				count += 2 // Две скобки вида () самоуничтожаются и инкрементируют счётчик
-			} else {
-				stack = types.Push(stack, x) // В противном случае просто пишем скобки в стек
-				stack = types.Push(stack, r)
-
-				if r == ')' { // Если последние две скобки вида )), то их уже не уничтожить
-					if max < count { // В таком случае сбрасываем счётчик, т.к. мы точно не внутри корректной посл-ти
-						max = count
-					}
-					count = 0
+	for i := 0; i < len(input); i++ { // Перебираем все возможные последовательности потому что я не придумал как это сделать за линейное время
+		if input[i] == '(' { // Последовательность может начинаться только с (
+			count = 0
+			length = 0
+			for j := i; j < len(input); j++ {
+				if input[j] == '(' {
+					count += 1
+				}
+				if input[j] == ')' {
+					count -= 1
+				}
+				if count == 0 { // Если кол-во ( равно кол-ву ) значит получили верную последовательность -- обновляем макс длину
+					length = j - i + 1
+				}
+				if count < 0 { // Если кол-во ) больше кол-ва ( значит верную последовательность уже не получим -- фиксируем результат
+					break
 				}
 			}
-		} else {
-			stack = types.Push(stack, r) // Первый элемент просто пишем в стек
+			if length > max {
+				max = length
+			}
 		}
-	}
-
-	if max < count {
-		max = count
 	}
 
 	fmt.Println(max)

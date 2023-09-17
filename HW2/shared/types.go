@@ -59,13 +59,13 @@ func Enqueue(Q []int, x int) []int {
 
 // --- Стек ---
 
-func Pop(S []rune) ([]rune, rune) {
+func Pop(S []int) ([]int, int) {
 	x := S[len(S)-1]
 	S = S[:len(S)-1]
 	return S, x
 }
 
-func Push(S []rune, x rune) []rune {
+func Push(S []int, x int) []int {
 	S = append(S, x)
 	return S
 }
