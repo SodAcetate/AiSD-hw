@@ -15,7 +15,7 @@ func main() {
 	t1.Run([]int{1, 2, 3, 4, 5}, 2)
 
 	fmt.Println("== Task 2 ==")
-	t2.Run("(()))()")
+	t2.Run(")(()())(")
 
 	fmt.Println("== Task 3 ==")
 	list := types.MakeList([]int{1, 2, 3, 4, 5, 6, 7, 8})
